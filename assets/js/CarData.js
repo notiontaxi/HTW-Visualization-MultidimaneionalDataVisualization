@@ -29,16 +29,19 @@ window.CarData = CarData;
     this.origin = arrayWithData[9];
 
     this.dataArray = {
-      car : this.car,
-      manufacturer: this.manufacturer,
-      mpg : this.mpg,
-      cylinders : this.cylinders,
-      displacement : this.displacement,
-      horsepower : this.horsepower,
-      weight : this.weight,
-      acceleration : this.acceleration,
-      modelYear : this.modelYear,
-      origin : this.origin
+      car: this.car == 'NA'? undefined : this.car
+      , cylinders: parseInt(this.cylinders)
+      , manufacturer: this.manufacturer == 'NA'? undefined : this.manufacturer
+      , mpg: parseFloat(this.mpg)
+      , OnehndrtKilometersToNLitre : 235/this.mpg
+      , displacementInCcm : this.displacement*16.384
+      , displacementInCInch: this.displacement
+      , horsepower : parseFloat(this.horsepower)
+      , weightInTons : this.weight*0.0004536
+      , weightInPounds: this.weight
+      , acceleration : parseFloat(this.acceleration)
+      , modelYear : parseInt(this.modelYear)
+      , origin : this.origin == 'NA'? undefined : this.origin
     };
   }
   

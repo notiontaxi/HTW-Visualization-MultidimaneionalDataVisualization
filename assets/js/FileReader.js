@@ -12,6 +12,7 @@ window.FileProcessor = FileProcessor;
     this.reader = this.getFileReader();
   }
 
+
   FileProcessor.prototype.processFile = function(event){
     event.stopPropagation();
     event.preventDefault();
@@ -19,8 +20,9 @@ window.FileProcessor = FileProcessor;
     var files = event.dataTransfer.files;
     
     this.reader.readAsText(files[0]);
-    console.log();
+
   }
+
 
   FileProcessor.prototype.checkFileReaderSupport = function(){
     return window.File && window.FileList && window.FileReader;
@@ -28,16 +30,17 @@ window.FileProcessor = FileProcessor;
 
 
   FileProcessor.prototype.parseFile = function(content){
-    this.createCarDatas(this.textToArray(content));
+    this.getCarDataSet(this.textToArray(content));
   }
 
-  FileProcessor.prototype.createCarDatas = function(values){
+
+  FileProcessor.prototype.getCarDataSet = function(values){
     var carDatas = Array();
 
     for(var i = 1; i < values.length; i++)
       carDatas.push(new window.CarData(values[i]));
       
-    console.log(carDatas[0].getDataObject());
+    return new window.DataSet(carDatas);
   }
 
   FileProcessor.prototype.textToArray = function(text){
@@ -55,6 +58,7 @@ window.FileProcessor = FileProcessor;
       return undefined;
 
   }
+
 
   FileProcessor.prototype.checkContent = function(checkMe){
     var cleaned = checkMe.replace(/\t/g, '');
