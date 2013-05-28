@@ -24,6 +24,10 @@ window.Canvas = Canvas;
     }.bind(this);    
   }
 
+  Canvas.prototype.getContext = function(){
+    return this.ctx;
+  }
+
   Canvas.prototype.updateSize = function() {
     this.ctx.canvas.width  = $('#container').width()*.833;
   }
@@ -40,5 +44,15 @@ window.Canvas = Canvas;
 
     this.ctx.fillRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
   }
+
+  // DRAWING
+
+  Canvas.prototype.drawLine = function(startPoint, endPoint){
+    this.ctx.moveTo(startPoint.x,startPoint.y);
+    this.ctx.lineTo(endPoint.x,endPoint.y);
+    this.ctx.stroke();
+  }
+
+
 
 

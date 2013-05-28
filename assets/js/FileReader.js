@@ -38,8 +38,10 @@ window.FileProcessor = FileProcessor;
     var carDatas = Array();
 
     for(var i = 1; i < values.length; i++)
-      carDatas.push(new window.CarData(values[i]));
+      carDatas.push(new window.CarData(values[i]))
       
+    console.log(carDatas)
+
     return new window.DataSet(carDatas);
   }
 
