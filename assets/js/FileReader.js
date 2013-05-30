@@ -30,19 +30,20 @@ window.FileProcessor = FileProcessor;
 
 
   FileProcessor.prototype.parseFile = function(content){
-    this.getCarDataSet(this.textToArray(content));
+    this.createCarDataSet(this.textToArray(content));
   }
 
 
-  FileProcessor.prototype.getCarDataSet = function(values){
-    var carDatas = Array();
+  FileProcessor.prototype.createCarDataSet = function(values){
+    if(!!values)
+    {
+      var carDatas = Array();
 
-    for(var i = 1; i < values.length; i++)
-      carDatas.push(new window.CarData(values[i]))
-      
-    console.log(carDatas)
+      for(var i = 1; i < values.length; i++)
+        carDatas.push(new window.CarData(values[i]))
 
-    return new window.DataSet(carDatas);
+      return new window.DataSet(carDatas)
+    }
   }
 
   FileProcessor.prototype.textToArray = function(text){

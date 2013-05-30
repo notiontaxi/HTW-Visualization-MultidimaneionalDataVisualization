@@ -19,6 +19,19 @@ window.CoordinateSystem = CoordinateSystem;
     canvas.drawLine()
   }
 
+  CoordinateSystem.prototype.drawLines = function(){
+    // use:
+    startPoint = {
+        x: 0
+      , y: 0
+    }
+    endPoint = {
+        x: 0
+      , y: 0
+    }
+    canvas.drawLine(startPoint, endPoint)
+  }  
+
 
 
 

@@ -19,16 +19,19 @@ window.Gui = Gui;
     }.bind(this));
 
     dropZone = document.getElementById('myCanvas');
-    dropZone.addEventListener('drop', function(event){this.fileReader.processFile(event);this.draw()}.bind(this), false);
+    dropZone.addEventListener('drop', function(event){this.start(this.fileReader.processFile(event))}.bind(this), false);
     dropZone.addEventListener('dragover', function(event){this.showDragOver(event, true)}.bind(this), false);
     dropZone.addEventListener('dragleave', function(event){this.showDragOver(event, false)}.bind(this), false);
 
   }
 
 
+  Gui.prototype.start = function(data){
+    console.log(data)
+    if(!!data){
 
-  Gui.prototype.draw = function(event, onOrOff){
-
+        console.log(data.getObjectArray()[0].getDataObject())
+    }
   }
 
 

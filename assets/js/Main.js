@@ -19,4 +19,6 @@ $(function() {
   var fileReader = new window.FileProcessor();
   var gui = new window.Gui(canvas, fileReader, coordSys);
 
+  gui.start()
+
 });
