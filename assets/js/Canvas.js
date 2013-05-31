@@ -32,10 +32,6 @@ window.Canvas = Canvas;
     this.ctx.canvas.width  = $('#container').width()*.833;
   }
 
-  Canvas.prototype.switchViewTo = function(mode){
-    console.log('switching mode to '+mode);
-  }
-
   Canvas.prototype.highlight = function(onOrOff){
     if (onOrOff)
       this.ctx.fillStyle="#4A8FF0";

@@ -9,18 +9,20 @@ window.FileProcessor = FileProcessor;
 
 
   function FileProcessor(){
-    this.reader = this.getFileReader();
+    this.reader = this.getFileReader()
   }
 
 
-  FileProcessor.prototype.processFile = function(event){
-    event.stopPropagation();
-    event.preventDefault();
+  FileProcessor.prototype.processFile = function(event, callback, callbackObj){
+    this.callback = callback;
+    this.callbackObj = callbackObj;
+    event.stopPropagation()
+    event.preventDefault()
 
-    var files = event.dataTransfer.files;
-    
-    this.reader.readAsText(files[0]);
+    var files = event.dataTransfer.files
 
+    // event will be called, when reader finished reading (see method getFileReader())
+    this.reader.readAsText(files[0])
   }
 
 
@@ -30,7 +32,7 @@ window.FileProcessor = FileProcessor;
 
 
   FileProcessor.prototype.parseFile = function(content){
-    this.createCarDataSet(this.textToArray(content));
+    return this.createCarDataSet(this.textToArray(content));
   }
 
 
@@ -79,7 +81,7 @@ window.FileProcessor = FileProcessor;
         });  
         
         this.reader.addEventListener("loadend", function(event) {
-          this.parseFile(event.target.result);
+          this.callback(this.parseFile(event.target.result), this.callbackObj);
         }.bind(this)); 
 
 
