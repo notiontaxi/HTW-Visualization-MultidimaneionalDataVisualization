@@ -52,7 +52,7 @@ window.Canvas = Canvas;
   }
 
    Canvas.prototype.clear = function(){
-    this.ctx.fillStyle="#4A8FF0"
+    this.ctx.fillStyle="lightgrey"
     this.ctx.fillRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height)
   } 
 

@@ -66,34 +66,37 @@ window.Gui = Gui;
   }
 
   Gui.prototype.draw = function(){
-    this.resizeContainer()
-    console.log('drawing mode '+this.mode)
+    if(!!this.data)
+    {
+      this.resizeContainer()
+      console.log('drawing mode '+this.mode)
 
-    // draw coordinate system
-    this.coordSystem.meashured(this.calcMinMaxVals(), this.textForAxes())
+      // draw coordinate system
+      this.coordSystem.meashured(this.calcMinMaxVals(), this.textForAxes())
 
-    // create and draw glyphs
-    var objArray = this.data.getObjectArray()
+      // create and draw glyphs
+      var objArray = this.data.getObjectArray()
 
-    this.glyphFactory.reset()
+      this.glyphFactory.reset()
 
-    for(var i = 0; i < objArray.length; i++){
-      var currDataObj = objArray[i].getDataObject()
+      for(var i = 0; i < objArray.length; i++){
+        var currDataObj = objArray[i].getDataObject()
 
-      // x axis: PS  /  y axis: Weight
-      if(this.mode == 'performance-action' || this.mode == 'manufacturing-action'){      
-        if(!isNaN(currDataObj.horsepower) && !isNaN(currDataObj.weightInTons)){
-          var glyph = this.glyphFactory.createGlyph(currDataObj, this.mode)
-          this.coordSystem.alignGlyph(glyph, currDataObj.horsepower, currDataObj.weightInTons)
-        }       
+        // x axis: PS  /  y axis: Weight
+        if(this.mode == 'performance-action' || this.mode == 'manufacturing-action'){      
+          if(!isNaN(currDataObj.horsepower) && !isNaN(currDataObj.weightInTons)){
+            var glyph = this.glyphFactory.createGlyph(currDataObj, this.mode)
+            this.coordSystem.alignGlyph(glyph, currDataObj.horsepower, currDataObj.weightInTons)
+          }       
+        }
+        // x axis: acceleration  /  y axis: hubraum
+        else if(this.mode == 'origin-action'){
+          if(!isNaN(currDataObj.acceleration) && !isNaN(currDataObj.displacementInCcm)){
+            var glyph = this.glyphFactory.createGlyph(currDataObj, this.mode)
+            this.coordSystem.alignGlyph(glyph, currDataObj.acceleration, currDataObj.displacementInCcm)
+          }  
+        }   
       }
-      // x axis: acceleration  /  y axis: hubraum
-      else if(this.mode == 'origin-action'){
-        if(!isNaN(currDataObj.acceleration) && !isNaN(currDataObj.displacementInCcm)){
-          var glyph = this.glyphFactory.createGlyph(currDataObj, this.mode)
-          this.coordSystem.alignGlyph(glyph, currDataObj.acceleration, currDataObj.displacementInCcm)
-        }  
-      }   
     }
 
     // legend

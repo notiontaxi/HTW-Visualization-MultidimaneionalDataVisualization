@@ -40,7 +40,7 @@ window.CoordinateSystem = CoordinateSystem;
         {
           y: this.toY(0.0 - this.measuringUnitLength * 4), 
           x: xPos
-        },'white')      
+        },'black')      
     }
 
     // y units
@@ -57,7 +57,7 @@ window.CoordinateSystem = CoordinateSystem;
         {
           x: this.toX(0.0) - this.spacing/2, 
           y: yPos
-        },'white')
+        },'black')
     }
  }
 

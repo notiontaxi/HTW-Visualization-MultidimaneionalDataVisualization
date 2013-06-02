@@ -11,6 +11,8 @@ window.GlyphFactory = GlyphFactory;
   function GlyphFactory(){
     this.svgns = "http://www.w3.org/2000/svg"
     this.container = $("#canvas-overlay")
+    this.createColors()
+
   }
 
 
@@ -58,17 +60,17 @@ window.GlyphFactory = GlyphFactory;
 
   GlyphFactory.prototype.addHover = function(element, data){
     var text = ""
-         + "Litre / 100 Km: "+data.OnehndrtKilometersToNLitre.toFixed(1)+" \n "
-         + "Acceleration: "+data.acceleration+" \n "
+         + "Manufacturer: " +data.manufacturer+" \n "
          + "Car: " + data.car+" \n "
+         + "origin: " +data.origin+" \n "
+         + "Horsepower: " +data.horsepower+" \n "
+         + "Model year: " + data.modelYear+" \n "
+         + "Litre / 100 Km: "+data.OnehndrtKilometersToNLitre.toFixed(1)+" \n "
+         + "Miles per gallon: " +data.mpg+" \n "
+         + "Acceleration: "+data.acceleration+" \n "
          + "Cylinders: " + data.cylinders+" \n "
          + "Displacement in inch: " + data.displacementInCInch+" \n "
          + "Displacement in ccm: " + data.displacementInCcm+" \n "
-         + "Horsepower: " +data.horsepower+" \n "
-         + "Manufacturer: " +data.manufacturer+" \n "
-         + "Model year: " + data.modelYear+" \n "
-         + "Miles per gallon: " +data.mpg+" \n "
-         + "origin: " +data.origin+" \n "
          + "Weight in pounds: "+data.weightInPounds+" \n "
          + "Weight in tons: "+data.weightInTons.toFixed(1)+" \n "
 
@@ -82,8 +84,52 @@ window.GlyphFactory = GlyphFactory;
 
   GlyphFactory.prototype.cumputeColor = function(dataObject){
 
-    var min = 5
-    var max = 30
+    val = Math.round(dataObject.OnehndrtKilometersToNLitre);
+    if(isNaN(val))
+      return '#FFFFFF'
+
+    if(val > 35)
+      return this.colors[0]
+
+    return this.colors[this.colors.length - val - 4]
+
+  }
+
+  GlyphFactory.prototype.createColors = function(dataObject){
+    this.colors = Array(
+      '#FF0000'
+      , '#FF1000'
+      , '#FF2000'
+      , '#FF3000'
+      , '#FF4000'
+      , '#FF5000'
+      , '#FF6000'
+      , '#FF7000'
+      , '#FF8000'
+      , '#FF9000'
+      , '#FFA000'
+      , '#FFB000'
+      , '#FFC000'
+      , '#FFD000'
+      , '#FFE000'
+      , '#FFF000'
+      , '#FFFF00'
+      , '#F0FF00' 
+      , '#E0FF00'
+      , '#D0FF00'
+      , '#C0FF00'
+      , '#B0FF00'
+      , '#A0FF00'
+      , '#90FF00'
+      , '#80FF00'
+      , '#70FF00'
+      , '#60FF00'
+      , '#50FF00'
+      , '#40FF00'
+      , '#30FF00'
+      , '#20FF00'
+      , '#10FF00'
+    )
 
   }
 
