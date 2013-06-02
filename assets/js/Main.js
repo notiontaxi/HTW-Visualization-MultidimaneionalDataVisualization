@@ -15,7 +15,7 @@ $(function() {
 
 
   var canvas = new window.Canvas('myCanvas');
-  var coordSys = new window.CoordinateSystem();
+  var coordSys = new window.CoordinateSystem(canvas);
   var fileReader = new window.FileProcessor();
   var gui = new window.Gui(canvas, fileReader, coordSys);
 

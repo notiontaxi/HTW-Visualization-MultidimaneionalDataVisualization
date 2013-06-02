@@ -45,7 +45,7 @@ window.Gui = Gui;
 
     console.log('drawing mode '+this.mode)
 
-    this.coordSystem.meashured(this.calcMinMaxVals())
+    this.coordSystem.meashured(this.calcMinMaxVals(), this.textForAxes())
 
     //objects = this.data.getObjectArray()
     
@@ -84,6 +84,27 @@ window.Gui = Gui;
 
     return vals    
   }
+
+ Gui.prototype.textForAxes = function(){
+
+    var texts
+    // x axis: PS  /  y axis: Weight
+    if(this.mode == 'performance-action' || this.mode == 'manufacturing-action'){      
+      texts = {
+          x: 'PS'
+        , y: 'Weight in Tons'
+      }        
+    } 
+    // x axis: acceleration  /  y axis: hubraum
+    else if(this.mode == 'origin-action'){
+      texts = {
+          x: '0-100 Km/h in sec'
+        , y: 'Ccm'
+      }
+    }
+
+    return texts    
+  } 
 
   Gui.prototype.switchViewTo = function(mode){
     $('#mode').html(mode)
