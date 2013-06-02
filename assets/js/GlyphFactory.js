@@ -54,27 +54,27 @@ window.GlyphFactory = GlyphFactory;
     $(mySvg).css('left', '-3px')
 
     if(dataObject.origin == 'American'){
-      circleElement = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      circleElement.setAttribute("r", 10);
-      circleElement.setAttribute("cx",10);
-      circleElement.setAttribute("cy",10);
+      shape = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      shape.setAttribute("r", 10);
+      shape.setAttribute("cx",10);
+      shape.setAttribute("cy",10);
     }else if(dataObject.origin == 'European'){
-      circleElement = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-      circleElement.setAttributeNS(null, "x", "0");
-      circleElement.setAttributeNS(null, "y", "0");
-      circleElement.setAttributeNS(null, "width", "20");
-      circleElement.setAttributeNS(null, "height", "20");     
+      shape = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      shape.setAttributeNS(null, "x", "0");
+      shape.setAttributeNS(null, "y", "0");
+      shape.setAttributeNS(null, "width", "20");
+      shape.setAttributeNS(null, "height", "20");     
     }else{
-      circleElement = document.createElementNS(this.svgns, "polygon")
-      circleElement.setAttributeNS(null, "points", "10,0 20,20 0,20")
+      shape = document.createElementNS(this.svgns, "polygon")
+      shape.setAttributeNS(null, "points", "10,0 20,20 0,20")
       $(mySvg).css('top', '-28px')
     }
 
-    circleElement.setAttribute("fill", this.cumputeColor(dataObject));
+    shape.setAttribute("fill", this.cumputeColor(dataObject));
 
 
 
-    mySvg.appendChild(circleElement)
+    mySvg.appendChild(shape)
     glyph.appendChild(mySvg)
 
     this.container.append(glyph)
@@ -90,12 +90,27 @@ window.GlyphFactory = GlyphFactory;
   GlyphFactory.prototype.glyphTypeTwo = function(dataObject){
     var glyph = document.createElement("div")
     $(glyph).addClass("glyph");
-    //glyph.innerHTML = 8
-    $(glyph).css("width", "20px")
-    $(glyph).css("height", "20px")
     
-    if(!isNaN(dataObject.modelYear))
-      glyph.innerHTML = dataObject.modelYear
+    
+    $(glyph).css("height", "15px")
+    
+    
+    if(!isNaN(dataObject.cylinders)){
+
+      var cylinders = '|'
+      for(var i = 1; i < dataObject.cylinders; i++)
+        if(i%4 == 0)
+          cylinders += '.|'
+        else
+          cylinders += '|'
+
+        var width = 13 + 4 * dataObject.displacementInCcm/1000
+      }else{
+        var cylinders = '?'
+        var width = 13
+      }
+      $(glyph).css("width", width+"px")
+      glyph.innerHTML = cylinders
 
     mySvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     $(mySvg).addClass("inner-svg");
@@ -104,22 +119,18 @@ window.GlyphFactory = GlyphFactory;
     mySvg.setAttribute("baseProfile", "tiny"); 
 
     $(mySvg).css('position', 'relative')
-    $(mySvg).css('top', '-25px')
-    $(mySvg).css('left', '-3px')
+    $(mySvg).css('top', '-26px')
+    $(mySvg).css('left', '0px')
 
+    shape = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    shape.setAttributeNS(null, "x", "0");
+    shape.setAttributeNS(null, "y", "0");
+    shape.setAttributeNS(null, "width", width);
+    shape.setAttributeNS(null, "height", "20");     
 
-      circleElement = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-      circleElement.setAttributeNS(null, "x", "0");
-      circleElement.setAttributeNS(null, "y", "0");
-      circleElement.setAttributeNS(null, "width", "20");
-      circleElement.setAttributeNS(null, "height", "20");     
+    shape.setAttribute("fill", this.cumputeColor(dataObject));
 
-
-    circleElement.setAttribute("fill", this.cumputeColor(dataObject));
-
-
-
-    mySvg.appendChild(circleElement)
+    mySvg.appendChild(shape)
     glyph.appendChild(mySvg)
 
     this.container.append(glyph)
