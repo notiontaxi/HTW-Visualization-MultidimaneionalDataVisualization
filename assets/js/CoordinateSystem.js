@@ -95,7 +95,7 @@ window.CoordinateSystem = CoordinateSystem;
   CoordinateSystem.prototype.alignGlyph = function(glyph, xVal, yVal){
 
     if(!isNaN(xVal))
-      $(glyph).css("left", this.valueToX(xVal - this.vals.xMin + this.xOffset))
+      $(glyph).css("left", this.valueToX(xVal - this.vals.xMin + this.xOffset) - $(glyph).width()/2)
     if(!isNaN(yVal))
       $(glyph).css("top", this.valueToY(yVal  - this.vals.yMin + this.yOffset))
 

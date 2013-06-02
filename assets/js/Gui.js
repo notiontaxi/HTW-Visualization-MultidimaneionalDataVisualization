@@ -171,11 +171,11 @@ window.Gui = Gui;
     if(mode == 'performance-action')
       $('#showMode').html('Performance data')
     else if(mode == 'manufacturing-action'){
-      $('#showMode').html('Performance and manufacturing data')
+      $('#showMode').html('Performance and manufacturing data 1')
       console.log(mode)
     }
     else if(mode == 'origin-action')
-      $('#showMode').html('Performance and origin data')
+      $('#showMode').html('Performance and manufacturing data 2')
 
     this.mode = mode
 

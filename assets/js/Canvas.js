@@ -33,6 +33,7 @@ window.Canvas = Canvas;
   }
 
   Canvas.prototype.updateSize = function(func) {
+
     this.ctx.canvas.width  = $('#container').width()*.833;
     $("#canvas-overlay").css({
       'left': this.ctx.canvas.left+'px',
@@ -65,7 +66,9 @@ window.Canvas = Canvas;
   }
 
   Canvas.prototype.drawText = function(text, pos, color,rot){
-
+    this.ctx.font = "bold 12px sans-serif"
+    this.ctx.textAlign = 'center'
+    this.ctx.textBaseline = 'middle'
     // cut if its a number
     if(!isNaN(text*2))
       text = text.toFixed(1)
