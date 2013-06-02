@@ -11,6 +11,7 @@
     <link href="./assets/css/bootstrap.css" rel="stylesheet">
     <link href="./assets/css/ui-lightness/jquery-ui-1.10.2.custom.min.css" rel="stylesheet">
     <link href="./assets/css/style.css" rel="stylesheet">
+    <link href="./assets/css/jquery.qtip.min.css" rel="stylesheet">
 
     <style type="text/css">
       body {
@@ -75,6 +76,8 @@
                 </ul>
             </div >
           </div>
+            <div id="showMode" class="offset1 span5">
+          </div>
         </div>
 
 
@@ -83,6 +86,7 @@
           <div class="offset1 span10">  
             <canvas id="myCanvas" width="auto" height="500px" style="border:1px solid darkblue;">
             </canvas>
+            <div id='canvas-overlay'></div>
           </div>
         </div>
 
@@ -96,7 +100,7 @@
 
     </div>
 
-    <div id="mode" style="display:none;">fdsfd</div>
+    <div id="mode" style="display:none;"></div>
 
       <hr>
 
@@ -153,6 +157,7 @@
     <script src="./assets/js/DataSet.js"></script>
     <script src="./assets/js/Canvas.js"></script>
     <script src="./assets/js/Gui.js"></script>
+    <script src="./assets/js/GlyphFactory.js"></script>
     <script src="./assets/js/Main.js"></script>
 
   </body>

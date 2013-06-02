@@ -22,6 +22,10 @@ window.Canvas = Canvas;
     this.ctx.textBaseline = 'middle'
   }
 
+  Canvas.prototype.getElement = function(){
+    return $('#'+this.id)  
+  }
+
   Canvas.prototype.bindEvents = function(){
     window.onresize = function(e){
       this.updateSize();
@@ -34,6 +38,10 @@ window.Canvas = Canvas;
 
   Canvas.prototype.updateSize = function() {
     this.ctx.canvas.width  = $('#container').width()*.833;
+    $("#canvas-overlay").css({
+      'left': this.ctx.canvas.left+'px',
+      'top': this.ctx.canvas.top+'px'
+    })
   }
 
   Canvas.prototype.highlight = function(onOrOff){
@@ -59,24 +67,23 @@ window.Canvas = Canvas;
   }
 
   Canvas.prototype.drawText = function(text, pos, color,rot){
+
     // cut if its a number
-    console.log(text*2)
     if(!isNaN(text*2))
       text = text.toFixed(1)
 
     this.ctx.fillStyle = color;
 
+    // rotate text by -90 degrees
     if(rot){
       this.ctx.save()
-      this.ctx.translate(pos.x, pos.y);
+      this.ctx.translate(pos.x, pos.y)
       this.ctx.rotate(Math.PI/2)
-      this.ctx.fillText(text, 0, 0);
+      this.ctx.fillText(text, 0, 0)
+      this.ctx.restore()
     }
     else
       this.ctx.fillText(text, pos.x, pos.y);
-
-    if(rot)
-      this.ctx.restore()
   }
 
 

@@ -26,8 +26,9 @@ window.CoordinateSystem = CoordinateSystem;
 
   CoordinateSystem.prototype.drawUnits = function(){
     // x units
-    var step = this.xValueRange / this.unitCount
-    for(var i = 1; i <= this.unitCount; i++){
+    console.log('xmax: '+this.vals.xMax)
+    var step =  (this.vals.xMax-this.vals.xMin+this.xOffset) / this.unitCount
+    for(var i = 0; i <= this.unitCount; i++){
       xPos = this.toX(this.width/this.unitCount*i)
 
       this.canvas.drawLine(
@@ -35,7 +36,7 @@ window.CoordinateSystem = CoordinateSystem;
         {x:xPos, y:this.toY(0.0 + this.measuringUnitLength)})
 
       this.canvas.drawText(
-        step * i, 
+        step * i + this.vals.xMin - this.xOffset, 
         {
           y: this.toY(0.0 - this.measuringUnitLength * 4), 
           x: xPos
@@ -43,8 +44,8 @@ window.CoordinateSystem = CoordinateSystem;
     }
 
     // y units
-    step = this.yValueRange / this.unitCount
-    for(var i = 1; i <= this.unitCount; i++){
+    step = ((this.vals.yMax - this.vals.yMin + this.yOffset) / this.unitCount)
+    for(var i = 0; i <= this.unitCount; i++){
       yPos = this.toY(this.height/this.unitCount*i)
 
       this.canvas.drawLine(
@@ -52,7 +53,7 @@ window.CoordinateSystem = CoordinateSystem;
         {y:yPos, x:this.toX(0.0 + this.measuringUnitLength)})
 
       this.canvas.drawText(
-        step * i, 
+        (step * i) + this.vals.yMin - this.yOffset, 
         {
           x: this.toX(0.0) - this.spacing/2, 
           y: yPos
@@ -80,7 +81,7 @@ window.CoordinateSystem = CoordinateSystem;
   }
 
   CoordinateSystem.prototype.meashured = function(vals, texts){
-
+    this.vals = vals
     this.computeRanges(vals)
     this.canvas.clear()
 
@@ -90,23 +91,52 @@ window.CoordinateSystem = CoordinateSystem;
 
   }
 
-  CoordinateSystem.prototype.computeRanges = function(vals){
+  CoordinateSystem.prototype.alignGlyph = function(glyph, xVal, yVal){
 
+    if(!isNaN(xVal))
+      $(glyph).css("left", this.valueToX(xVal - this.vals.xMin + this.xOffset))
+    if(!isNaN(yVal))
+      $(glyph).css("top", this.valueToY(yVal  - this.vals.yMin + this.yOffset))
+
+  }
+
+
+  CoordinateSystem.prototype.computeRanges = function(vals){
+    
     this.xEnd = this.canvasWidth - this.spacing
+    // how many pixels anailable in width?
     this.width = this.xEnd - this.toX(0.0)
     this.xValueRange = vals.xMax - vals.xMin
 
     this.yEnd = this.spacing
+    // how many pixels anailable in height?
     this.height = this.toY(0.0) - this.yEnd
-    this.yValueRange = vals.yMax - vals.yMin    
+    this.yValueRange = vals.yMax - vals.yMin   
+
+    this.xOffset = this.xValueRange / 15
+    this.yOffset = this.yValueRange / 15
+
+    this.xValueRange = this.xValueRange + this.xOffset
+    this.xValueRange = this.xValueRange + this.yOffset
   } 
 
   CoordinateSystem.prototype.toY = function(y){
-    return this.canvasHeight - y - this.spacing
+    return this.canvasHeight - y - this.spacing 
   }   
   CoordinateSystem.prototype.toX = function(x){
     return x + this.spacing
   } 
+
+  CoordinateSystem.prototype.valueToY = function(y){
+    var relativeValue = y * (this.height / (this.vals.yMax - this.vals.yMin + this.yOffset))
+
+    return this.toY(relativeValue)
+  }   
+  CoordinateSystem.prototype.valueToX = function(x){
+    var relativeValue = x * (this.width / (this.vals.xMax - this.vals.xMin + this.xOffset))
+
+    return this.toX(relativeValue)
+  }   
 
 
 

@@ -11,7 +11,22 @@ window.Gui = Gui;
     this.coordSystem = coordSys;
 
     this.bindEvents();
+
     $('#mode').html('performance-action')
+    $('#showMode').html('Performance data')
+    $('#showMode').attr('title',"Current visualization-mode")
+    $('#container').tooltip();
+
+    $("#canvas-overlay").css({
+      'left': this.canvas.getElement().position().left+'px',
+      'top': this.canvas.getElement().position().top+'px',
+      'width': this.canvas.getElement().width()+'px',
+      'height': this.canvas.getElement().height()+'px'
+    });
+
+    this.glyphFactory = new GlyphFactory()
+
+    $('#canvas-overlay').append(this.glyphFactory.getSvgContainer())
   }
 
   Gui.prototype.bindEvents = function(){
@@ -19,7 +34,7 @@ window.Gui = Gui;
       this.switchViewTo(e.target.id);
     }.bind(this));
 
-    dropZone = document.getElementById('myCanvas');
+    dropZone = document.getElementById('canvas-overlay');
     dropZone.addEventListener('drop', function(event){var val = this.fileProcessor.processFile(event, this.start, this)}.bind(this), false);
     dropZone.addEventListener('dragover', function(event){this.showDragOver(event, true)}.bind(this), false);
     dropZone.addEventListener('dragleave', function(event){this.showDragOver(event, false)}.bind(this), false);
@@ -45,16 +60,32 @@ window.Gui = Gui;
 
     console.log('drawing mode '+this.mode)
 
+    // draw coordinate system
     this.coordSystem.meashured(this.calcMinMaxVals(), this.textForAxes())
 
-    //objects = this.data.getObjectArray()
-    
-    //console.log(vals)
-    // x axis / y axis
-    //
-    //console.log(objects[0].getDataObject())
+    // create and draw glyphs
+    var objArray = this.data.getObjectArray()
 
-    // glyphs
+    this.glyphFactory.reset()
+
+    for(var i = 0; i < objArray.length; i++){
+      var currDataObj = objArray[i].getDataObject()
+
+      // x axis: PS  /  y axis: Weight
+      if(this.mode == 'performance-action' || this.mode == 'manufacturing-action'){      
+        if(!isNaN(currDataObj.horsepower) && !isNaN(currDataObj.weightInTons)){
+          var glyph = this.glyphFactory.createGlyph(currDataObj, this.mode)
+          this.coordSystem.alignGlyph(glyph, currDataObj.horsepower, currDataObj.weightInTons)
+        }       
+      }
+      // x axis: acceleration  /  y axis: hubraum
+      else if(this.mode == 'origin-action'){
+        if(!isNaN(currDataObj.acceleration) && !isNaN(currDataObj.displacementInCcm)){
+          var glyph = this.glyphFactory.createGlyph(currDataObj, this.mode)
+          this.coordSystem.alignGlyph(glyph, currDataObj.acceleration, currDataObj.displacementInCcm)
+        }  
+      }   
+    }
 
     // legend
   }
@@ -108,7 +139,18 @@ window.Gui = Gui;
 
   Gui.prototype.switchViewTo = function(mode){
     $('#mode').html(mode)
+
+    if(mode == 'performance-action')
+      $('#showMode').html('Performance data')
+    else if(mode == 'manufacturing-action'){
+      $('#showMode').html('Performance and manufacturing data')
+      console.log(mode)
+    }
+    else if(mode == 'origin-action')
+      $('#showMode').html('Performance and origin data')
+
     this.mode = mode
+
     this.draw(mode)
   }
 
