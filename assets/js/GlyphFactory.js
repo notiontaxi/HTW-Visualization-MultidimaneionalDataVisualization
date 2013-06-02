@@ -27,52 +27,126 @@ window.GlyphFactory = GlyphFactory;
 
   GlyphFactory.prototype.createGlyph = function(dataObject, mode) {
 
+    if(mode == 'manufacturing-action' || mode == 'origin-action')
+      return this.glyphTypeOne(dataObject)
+    else
+      return this.glyphTypeTwo(dataObject)
+}
+
+  GlyphFactory.prototype.glyphTypeOne = function(dataObject){
     var glyph = document.createElement("div")
+    $(glyph).addClass("glyph");
+    //glyph.innerHTML = 8
     $(glyph).css("width", "20px")
     $(glyph).css("height", "20px")
-
-    $(glyph).addClass("glyph");
+    
+    if(!isNaN(dataObject.modelYear))
+      glyph.innerHTML = dataObject.modelYear
 
     mySvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    $(mySvg).addClass("inner-svg");
+    $(mySvg).css("z-index",'-1');
     mySvg.setAttribute("version", "1.2");
     mySvg.setAttribute("baseProfile", "tiny"); 
 
-    circleElement = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    circleElement.setAttribute("r", 10);
-    circleElement.setAttribute("cx",10);
-    circleElement.setAttribute("cy",10);
+    $(mySvg).css('position', 'relative')
+    $(mySvg).css('top', '-25px')
+    $(mySvg).css('left', '-3px')
+
+    if(dataObject.origin == 'American'){
+      circleElement = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circleElement.setAttribute("r", 10);
+      circleElement.setAttribute("cx",10);
+      circleElement.setAttribute("cy",10);
+    }else if(dataObject.origin == 'European'){
+      circleElement = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      circleElement.setAttributeNS(null, "x", "0");
+      circleElement.setAttributeNS(null, "y", "0");
+      circleElement.setAttributeNS(null, "width", "20");
+      circleElement.setAttributeNS(null, "height", "20");     
+    }else{
+      circleElement = document.createElementNS(this.svgns, "polygon")
+      circleElement.setAttributeNS(null, "points", "10,0 20,20 0,20")
+      $(mySvg).css('top', '-28px')
+    }
 
     circleElement.setAttribute("fill", this.cumputeColor(dataObject));
+
+
 
     mySvg.appendChild(circleElement)
     glyph.appendChild(mySvg)
 
     this.container.append(glyph)
 
-    shape = document.createElementNS(this.svgns, "polygon")
-    shape.setAttributeNS(null, "points", "5,5 45,45 5,45")
-    shape.setAttributeNS(null, "fill", "red")
-    shape.setAttributeNS(null, "stroke", "red")
+
+
 
     this.addHover(glyph, dataObject)
+
     return glyph
-}
+  }
+
+  GlyphFactory.prototype.glyphTypeTwo = function(dataObject){
+    var glyph = document.createElement("div")
+    $(glyph).addClass("glyph");
+    //glyph.innerHTML = 8
+    $(glyph).css("width", "20px")
+    $(glyph).css("height", "20px")
+    
+    if(!isNaN(dataObject.modelYear))
+      glyph.innerHTML = dataObject.modelYear
+
+    mySvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    $(mySvg).addClass("inner-svg");
+    $(mySvg).css("z-index",'-1');
+    mySvg.setAttribute("version", "1.2");
+    mySvg.setAttribute("baseProfile", "tiny"); 
+
+    $(mySvg).css('position', 'relative')
+    $(mySvg).css('top', '-25px')
+    $(mySvg).css('left', '-3px')
+
+
+      circleElement = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      circleElement.setAttributeNS(null, "x", "0");
+      circleElement.setAttributeNS(null, "y", "0");
+      circleElement.setAttributeNS(null, "width", "20");
+      circleElement.setAttributeNS(null, "height", "20");     
+
+
+    circleElement.setAttribute("fill", this.cumputeColor(dataObject));
+
+
+
+    mySvg.appendChild(circleElement)
+    glyph.appendChild(mySvg)
+
+    this.container.append(glyph)
+
+    
+
+
+    this.addHover(glyph, dataObject)
+
+    return glyph
+  }
 
   GlyphFactory.prototype.addHover = function(element, data){
     var text = ""
          + "Manufacturer: " +data.manufacturer+" \n "
-         + "Car: " + data.car+" \n "
-         + "origin: " +data.origin+" \n "
-         + "Horsepower: " +data.horsepower+" \n "
-         + "Model year: " + data.modelYear+" \n "
-         + "Litre / 100 Km: "+data.OnehndrtKilometersToNLitre.toFixed(1)+" \n "
-         + "Miles per gallon: " +data.mpg+" \n "
-         + "Acceleration: "+data.acceleration+" \n "
-         + "Cylinders: " + data.cylinders+" \n "
-         + "Displacement in inch: " + data.displacementInCInch+" \n "
-         + "Displacement in ccm: " + data.displacementInCcm+" \n "
-         + "Weight in pounds: "+data.weightInPounds+" \n "
-         + "Weight in tons: "+data.weightInTons.toFixed(1)+" \n "
+         + "| Car: " + data.car+" \n "
+         + "| origin: " +data.origin+" \n "
+         + "| Horsepower: " +data.horsepower+" \n "
+         + "| Model year: " + data.modelYear+" \n "
+         + "| Litre / 100 Km: "+data.OnehndrtKilometersToNLitre.toFixed(1)+" \n "
+         + "| Miles per gallon: " +data.mpg+" \n "
+         + "| Acceleration: "+data.acceleration+" \n "
+         + "| Cylinders: " + data.cylinders+" \n "
+         + "| Displacement in inch: " + data.displacementInCInch+" \n "
+         + "| Displacement in ccm: " + data.displacementInCcm+" \n "
+         + "| Weight in pounds: "+data.weightInPounds+" \n "
+         + "| Weight in tons: "+data.weightInTons.toFixed(1)+" \n "
 
     $(element).attr("title", text)
     $(element).tooltip(

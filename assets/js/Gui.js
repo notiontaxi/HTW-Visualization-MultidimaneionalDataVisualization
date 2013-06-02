@@ -68,6 +68,10 @@ window.Gui = Gui;
   Gui.prototype.draw = function(){
     if(!!this.data)
     {
+      $('#dd').show()
+      $('#info').hide()
+
+
       this.resizeContainer()
       console.log('drawing mode '+this.mode)
 
@@ -97,8 +101,20 @@ window.Gui = Gui;
           }  
         }   
       }
+
+    if(this.mode == 'manufacturing-action' || this.mode == 'origin-action'){
+        $('#legend1').show()
+        $('#legend2').hide()  
+    }
+    else{
+        $('#legend1').hide()
+        $('#legend2').show()  
+      }
+
+    
     }
 
+    //$('#container').tooltip();
     // legend
   }
 

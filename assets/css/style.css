@@ -3,6 +3,10 @@
 
 }
 
+.inner-svg{
+	position: relative;
+}
+
 .tooltip {
     min-width:256px;
     max-width:30px;
@@ -11,6 +15,8 @@
 .glyph{
 	position: absolute;
 	z-index: 99;
+	font-size:small;
+
 }
 
 .slider{

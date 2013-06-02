@@ -19,6 +19,10 @@ $(function() {
   var fileReader = new window.FileProcessor();
   var gui = new window.Gui(canvas, fileReader, coordSys);
 
+  $('#dd').hide()
+  $('#legend1').hide()
+  $('#legend2').hide()
+
   gui.start()
 
 });
