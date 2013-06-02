@@ -40,7 +40,7 @@ window.GlyphFactory = GlyphFactory;
     circleElement.setAttribute("cx",10);
     circleElement.setAttribute("cy",10);
 
-    circleElement.setAttribute("fill", "#336699");
+    circleElement.setAttribute("fill", this.cumputeColor(dataObject));
 
     mySvg.appendChild(circleElement)
     glyph.appendChild(mySvg)
@@ -77,6 +77,13 @@ window.GlyphFactory = GlyphFactory;
       {
         content: function() {return $(this).attr("title");}
       })
+
+  }
+
+  GlyphFactory.prototype.cumputeColor = function(dataObject){
+
+    var min = 5
+    var max = 30
 
   }
 

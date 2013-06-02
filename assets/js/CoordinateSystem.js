@@ -102,6 +102,8 @@ window.CoordinateSystem = CoordinateSystem;
 
 
   CoordinateSystem.prototype.computeRanges = function(vals){
+        this.canvasHeight = this.canvas.ctx.canvas.height
+    this.canvasWidth = this.canvas.ctx.canvas.width
     
     this.xEnd = this.canvasWidth - this.spacing
     // how many pixels anailable in width?

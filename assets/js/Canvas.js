@@ -14,7 +14,7 @@ window.Canvas = Canvas;
     this.ctx = this.cv.getContext('2d');
 
     this.updateSize();
-    this.bindEvents();
+    
     this.highlight(false);
 
     this.ctx.font = "bold 12px sans-serif"
@@ -26,22 +26,20 @@ window.Canvas = Canvas;
     return $('#'+this.id)  
   }
 
-  Canvas.prototype.bindEvents = function(){
-    window.onresize = function(e){
-      this.updateSize();
-    }.bind(this);    
-  }
+
 
   Canvas.prototype.getContext = function(){
     return this.ctx;
   }
 
-  Canvas.prototype.updateSize = function() {
+  Canvas.prototype.updateSize = function(func) {
     this.ctx.canvas.width  = $('#container').width()*.833;
     $("#canvas-overlay").css({
       'left': this.ctx.canvas.left+'px',
       'top': this.ctx.canvas.top+'px'
     })
+    if(!!func)
+      func();
   }
 
   Canvas.prototype.highlight = function(onOrOff){

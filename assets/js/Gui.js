@@ -17,12 +17,7 @@ window.Gui = Gui;
     $('#showMode').attr('title',"Current visualization-mode")
     $('#container').tooltip();
 
-    $("#canvas-overlay").css({
-      'left': this.canvas.getElement().position().left+'px',
-      'top': this.canvas.getElement().position().top+'px',
-      'width': this.canvas.getElement().width()+'px',
-      'height': this.canvas.getElement().height()+'px'
-    });
+    this.resizeContainer()
 
     this.glyphFactory = new GlyphFactory()
 
@@ -39,7 +34,12 @@ window.Gui = Gui;
     dropZone.addEventListener('dragover', function(event){this.showDragOver(event, true)}.bind(this), false);
     dropZone.addEventListener('dragleave', function(event){this.showDragOver(event, false)}.bind(this), false);
 
+     window.onresize = function(e){
+      this.canvas.updateSize(function(){this.draw()}.bind(this));
+      
+     }.bind(this);  
   }
+
 
 
   // pass thet to be in own context again
@@ -55,9 +55,18 @@ window.Gui = Gui;
   }
 
 
+  Gui.prototype.resizeContainer = function(){
+    $("#canvas-overlay").css({
+      'left': this.canvas.getElement().position().left+'px',
+      'top': this.canvas.getElement().position().top+'px',
+      'width': this.canvas.getElement().width()+'px',
+      'height': this.canvas.getElement().height()+'px'
+    }); 
+
+  }
 
   Gui.prototype.draw = function(){
-
+    this.resizeContainer()
     console.log('drawing mode '+this.mode)
 
     // draw coordinate system
