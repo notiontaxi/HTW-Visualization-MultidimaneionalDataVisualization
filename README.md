@@ -4,5 +4,4 @@ This repository contains one of the projects of the course **Visualisation**, wh
 
 
 ## Contributors
-* <a href="https://github.com/juliusse">Julius Seltenheim</a>
 * <a href="https://github.com/notiontaxi">Florian Wokurka</a>
